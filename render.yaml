@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: minhas-financas
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.1
+      - key: APP_MODE
+        value: cloud
+      - key: HOST
+        value: 0.0.0.0
+      - key: SUPABASE_URL
+        value: https://sodbjsptrmmixvadwebj.supabase.co
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false

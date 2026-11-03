@@ -1,30 +1,33 @@
 # Minhas Finanças
 
-Aplicativo inicial de finanças pessoais, em português, com receitas, despesas, categorias, resumo mensal, exclusão de lançamentos e backup JSON.
+Finanças pessoais em português: receitas, despesas, categorias, resumo mensal e backups JSON. Possui modo local e modo online com login e banco Supabase, protegido por regras por usuário (RLS).
 
-## Como executar
+## Publicar para acessar de qualquer lugar
 
-Requer Node.js 22 ou superior. Não utiliza bibliotecas externas nem banco de dados.
+Siga [o passo a passo de publicação](DEPLOY.md). O arquivo `render.yaml` prepara o serviço Render. Execute primeiro `supabase/schema.sql` no SQL Editor do Supabase. Configure a chave pública no Render; não use credenciais administrativas. O cadastro e a senha dentro do aplicativo são separados das contas dos serviços de hospedagem.
+
+## Executar localmente
+
+Requer Node.js 22 ou superior (validado com 24.22.1).
 
 ```bash
+npm ci --include=dev
+npm run build
 npm start
 ```
 
-O servidor usa a porta 3000 e aceita apenas conexões locais por padrão. Abra o navegador no endereço local informado pelo seu ambiente. Para encerrar, use Ctrl+C. PORT e HOST permitem configurar a porta e a interface de escuta. Expor o servidor em uma rede exige avaliar acesso e proteção dos dados: esta versão não tem autenticação.
+Sem as variáveis Supabase, usa o modo local, escutando em 127.0.0.1:3000. Os dados locais da primeira versão continuam disponíveis no mesmo navegador e endereço. Para encerrar, Ctrl+C.
+
+Para testar o modo online localmente, copie `.env.example` para `.env`, preencha a chave pública, adicione o endereço local à lista de redirect URLs no Supabase e execute `npm run start:cloud`. O script carrega o `.env` explicitamente. Não faça commit do `.env`. O modo online requer conexão com a internet; não realiza gravações offline.
 
 ```bash
 npm test
 ```
 
-Os testes verificam valores monetários, resumo por mês e validação de backups.
+Os testes cobrem valores monetários, resumos, backups, configuração segura e regras reais de PostgreSQL (via PGlite) para isolamento entre contas e importação atômica. Não substituem a validação final com login e e-mail no projeto Supabase publicado.
 
-## Uso e armazenamento
+## Uso
 
-1. Escolha o mês que deseja consultar.
-2. Informe tipo, descrição, valor (ex.: `150,50`), data e categoria.
-3. Clique em **Adicionar lançamento**. O resumo mostra entradas menos saídas do mês selecionado; não é um saldo bancário acumulado.
-4. Use **Exportar backup** periodicamente. **Importar backup** substitui os registros após confirmação.
+Escolha o mês, registre receita/despesa com valor como `150,50`, data e categoria. O saldo é entradas menos saídas do mês, não o saldo bancário acumulado. **Exportar backup** baixa JSON; **Importar backup** substitui todos os registros da conta (ou do navegador no modo local), após confirmação. Proteja esses arquivos: contêm informações financeiras em texto legível.
 
-Os dados são guardados no armazenamento local do navegador, associados ao endereço e porta usados para acessar o aplicativo. Não são enviados ao servidor nem sincronizados entre dispositivos. Limpar os dados do navegador, usar navegação privada ou mudar de navegador/endereço pode tornar os registros indisponíveis. Proteja seus backups: contêm informações financeiras em texto legível.
-
-Esta primeira versão não possui conexão bancária, login ou sincronização na nuvem. Começa sem dados de exemplo.
+Em modo online, entre com o mesmo login no celular ou computador. Use **Atualizar dados** para buscar alterações feitas em outra tela. Cada conta possui registros separados. O app não se conecta a bancos e não possui sincronização automática entre telas já abertas. Consulte DEPLOY.md para limites dos serviços e migração dos dados locais.

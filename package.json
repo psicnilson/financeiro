@@ -1,8 +1,22 @@
 {
   "name": "minhas-financas",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
-  "scripts": { "start": "node server.js", "test": "node --test" }
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test",
+    "build": "esbuild public/app.js --bundle --format=esm --minify --outfile=public/build/app.js",
+    "start:cloud": "node --env-file=.env server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.14",
+    "esbuild": "^0.28.2"
+  }
 }
