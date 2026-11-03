@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Minhas Finanças</title><link rel="stylesheet" href="/style.css"><script type="module" src="/app.js"></script></head>
+<body>
+<header><div class="brand"><span class="logo" aria-hidden="true">$</span><div><strong>Minhas Finanças</strong><span>Seu dinheiro, com clareza.</span></div></div><span class="badge">Finanças pessoais</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">SEU CONTROLE FINANCEIRO</p><h1>Um olhar para o seu mês.</h1><p>Acompanhe o que entra, o que sai e planeje seus próximos passos.</p></div><label class="month">Mês de referência<input id="month" type="month" required></label></section>
+<section class="cards" aria-label="Resumo mensal"><article><span>Entradas do mês</span><strong id="income">R$ 0,00</strong><small>Receitas registradas</small></article><article><span>Saídas do mês</span><strong id="expense">R$ 0,00</strong><small>Despesas registradas</small></article><article class="balance"><span>Saldo do mês</span><strong id="balance">R$ 0,00</strong><small>Entradas menos saídas deste mês</small></article></section>
+<p id="status" role="status" aria-live="polite"></p>
+<div class="workspace"><section class="panel"><h2>Novo lançamento</h2><p class="muted">Registre uma receita ou despesa.</p>
+<form id="entry-form">
+<label>Tipo<select id="type"><option value="expense">Despesa</option><option value="income">Receita</option></select></label>
+<label>Descrição<input id="description" maxlength="100" placeholder="Ex.: compras do mercado" required></label>
+<div class="fields"><label>Valor (R$)<input id="amount" inputmode="decimal" placeholder="0,00" required maxlength="12"></label><label>Data<input id="date" type="date" min="1900-01-01" max="9999-12-31" required></label></div>
+<label>Categoria<select id="category"></select></label>
+<button type="submit" class="primary">+ Adicionar lançamento</button>
+</form></section>
+<section class="panel movements"><div class="section-title"><div><h2>Lançamentos do mês</h2><p id="count" class="muted">Nenhum lançamento</p></div></div><div class="table-wrap"><table><thead><tr><th>Descrição</th><th>Data</th><th>Valor</th><th><span class="sr-only">Ações</span></th></tr></thead><tbody id="entries"></tbody></table></div><div id="empty" class="empty"><span aria-hidden="true">↗</span><h3>Seu mês começa aqui</h3><p>Adicione sua primeira receita ou despesa para ver o resumo.</p></div></section></div>
+<section class="backup"><div><h2>Seus dados ficam neste navegador</h2><p>Não há conta nem sincronização entre dispositivos. Exporte um backup para guardar seus registros; limpar os dados do navegador pode apagá-los.</p></div><div class="backup-actions"><button id="export" type="button">Exportar backup</button><label class="file-button">Importar backup<input id="import" type="file" accept=".json,application/json"></label></div></section>
+<footer>Um passo de cada vez para cuidar melhor do seu dinheiro.</footer>
+</main></body></html>
